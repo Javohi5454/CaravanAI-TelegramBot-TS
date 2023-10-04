@@ -1,0 +1,51 @@
+ // Ваш API-ключ OpenAI
+    //   const apiKey = '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';
+
+
+      // Функция для отправки запроса к API
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // async function sendMessage(message: string): Promise<string> {
+      //   try {
+      //     const response = await axios.post(
+      //       'https://api.openai.com/v1/chat/completions',
+      //       {
+      //         model: 'gpt-3.5-turbo',
+      //         messages: [{ role: 'system', content: 'You are Alexander.' }, { role: 'user', content: message}],
+      //       },
+      //       {
+      //         headers: {
+      //           'Content-Type': 'application/json',
+      //           'Authorization': `Bearer ${apiKey}`,
+      //         },
+      //       }
+      //     );
+
+      //     // Получение ответа от API
+      //     const choices = response.data.choices;
+      //     const reply = choices[0].message.content;
+
+      //     return reply;
+      //   } catch (error) {
+      //     console.error('Ошибка при отправке запроса к API:', error);
+      //     throw error;
+      //   }
+      // }
+
+      // Пример использования
+      // async function main() {
+
+      //   const data = {
+      //     // destination: "Dubai",
+      //     user_input_in_russia: `Найди мне 3 тура в ${destination} из Ташкента с бюджетом 1000$ на весь тур и с отелем не менее 3 или 4 звезд и предоставь подробную информацию откуда и ты должен искать туры на сайте `,
+      //     check_in: "2023-09-29",
+      //     check_out: "2023-10-01",
+      //     property_types: ["HOTEL"]
+      //   };
+
+      //   const reply : string = await sendMessage(JSON.stringify(data))
+      //   console.log('Ответ ChatGPT:', reply);
+
+      //   ctx.sendMessage(reply)
+      // }
+
+      // main();
