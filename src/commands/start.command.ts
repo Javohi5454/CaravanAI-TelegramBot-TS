@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Context, Telegraf } from "telegraf";
+import { Context, Markup, Telegraf } from "telegraf";
 import { IBotContext } from "../context/context.interface";
 import { Command } from "./command.class";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,9 +19,10 @@ export class StartCommand extends Command {
   
   // обработчик
   handle(): void {
-    this.bot.start((ctx) => {
+    this.bot.start(async (ctx) => {
       console.log(ctx.from.first_name);
       console.log(ctx.from.username);
+      
       this.aboutBot = [
         `Здрствуйте ${ctx.from.first_name},
             
@@ -38,15 +39,51 @@ export class StartCommand extends Command {
                 /* Also, we can have URL buttons. */
                 [ { text: "Сделат себе тур с помощью ИИ 🤖", callback_data: 'makeForAi' } ]
             ],
-          }   
+          }, 
       });
-      console.log(ctx.reply);
-    });
+      // const keyboard = Markup.keyboard([
+      //   [Markup.button.text('Найти нас 🔍🗺')],
+      // ]).resize();
+      // function keyboardButtons() {
+      //   return Markup.keyboard([
+      //     Markup.button.callback('Найти нас 🔍🗺', 'location')
+      //   ])
+      // }
 
+      // ctx.reply('Если вы хотите получить личную консультацию, то приходите в наш филиал, будем рады вас там видеть', {
+      //   reply_markup: {
+      //     keyboard: [
+      //       [
+      //         { text: 'Сделать себе тур с помощью ИИ 🤖', callback_data: 'location' }
+      //       ]
+      //     ]
+      //   }
+      // });
+      const keyboard = Markup.keyboard([
+        [Markup.button.callback('Найти нас 🔍🗺', `location`)],
+        [Markup.button.callback('Связатся с нами ☎️', `/location`)],
+      ]).resize();
+
+
+        await ctx.reply('Если вы хотите получить личную консультацию, то нажмите на кнопку ниже "Найти нас 🔍🗺" то приходите в наш филиал, будем рады вас там видеть 🏪', keyboard)
+        console.log(ctx.reply);
+
+    });
+    this.bot.hears('location', async (ctx: Context) => {
+      try {
+        // Отправка локации в ответ на команду /location
+        await ctx.reply('С радостью ждем вас в нашем филиале😇') // Замените координаты на нужные вам
+        await ctx.replyWithLocation(41.3156257273364, 69.32864228814121);
+      } catch (error) {
+        console.error('Ошибка при отправке локации:', error);
+        ctx.reply('Произошла ошибка при отправке локации.');
+      }
+    });
     this.bot.action("makeForAi", async (ctx) => {
       ctx.sendMessage("Запишите куда вы хотите вы отправится?")
       
     })
+    // senddata (send messages to group)
     this.bot.command('senddata', async (ctx) => {
       try {
         // Отправка сообщения в группу
@@ -60,6 +97,8 @@ export class StartCommand extends Command {
         ctx.reply('Произошла ошибка при отправке данных.');
       }
     });
+    // location
+
     // async function queryBudget() {
 
     // }
@@ -78,8 +117,10 @@ export class StartCommand extends Command {
             this.messageTextBudget = messageBudget;
             if (messageBudget < 400) {
               console.log("Not enough");
-              ctx.sendMessage('Этого капитала не достаточно для путешествия 😢');
+              await ctx.sendMessage('Этого капитала не достаточно для путешествия 😢');
+              await ctx.sendMessage('Просим вас поднять планку в бюджету для вашего будещего путиществия')
             } else {
+              
               ctx.sendMessage('Прекрасно 😁');
               console.log("Good");
               // Ваши дальнейшие действия с переменными messageText и messageTextBudget
@@ -89,6 +130,8 @@ export class StartCommand extends Command {
       } else {
         console.log("Not found text");
       }
+
+
     });
 
     
