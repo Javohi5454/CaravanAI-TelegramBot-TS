@@ -11,7 +11,7 @@ export class StartCommand extends Command {
   messageText: string = "";
   chatId: number | undefined;
   messageTextBudget: number | undefined ;
-  webAppUrl: string = 'https://lucky-brigadeiros-dd2d36.netlify.app/'
+  webAppUrl: string = 'https://verdant-zabaione-953597.netlify.app/'
 
   constructor(bot: Telegraf<IBotContext>) {
     super(bot);
