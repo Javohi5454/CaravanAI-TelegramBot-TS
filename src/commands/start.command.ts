@@ -41,35 +41,13 @@ export class StartCommand extends Command {
             ],
           }, 
       });
-      // const keyboard = Markup.keyboard([
-      //   [Markup.button.text('Найти нас 🔍🗺')],
-      // ]).resize();
-      // function keyboardButtons() {
-      //   return Markup.keyboard([
-      //     Markup.button.callback('Найти нас 🔍🗺', 'location')
-      //   ])
-      // }
-
-      // ctx.reply('Если вы хотите получить личную консультацию, то приходите в наш филиал, будем рады вас там видеть', {
-      //   reply_markup: {
-      //     keyboard: [
-      //       [
-      //         { text: 'Сделать себе тур с помощью ИИ 🤖', callback_data: 'location' }
-      //       ]
-      //     ]
-      //   }
-      // });
-      const keyboard = Markup.keyboard([
-        [Markup.button.callback('Найти нас 🔍🗺', `location`)],
-        [Markup.button.callback('Связатся с нами ☎️', `/location`)],
-      ]).resize();
-
-
-        await ctx.reply('Если вы хотите получить личную консультацию, то нажмите на кнопку ниже "Найти нас 🔍🗺" то приходите в наш филиал, будем рады вас там видеть 🏪', keyboard)
-        console.log(ctx.reply);
-
+      const mainMenuKeyboard = Markup.keyboard([
+        Markup.button.callback('Найти нас 🔍🗺', 'addAction'),Markup.button.callback('Связатся с нами ☎️', 'addAction'),
+        Markup.button.callback('Сделат себе тур с помощью ИИ 🤖', 'addAction')
+        ],{columns: 2}).resize();
+        ctx.reply("Если вы хотите получить личную консультацию, то нажмите на кнопку ниже Найти нас 🔍🗺 то приходите в наш филиал, будем рады вас там видеть 🏪", mainMenuKeyboard)
     });
-    this.bot.hears('location', async (ctx: Context) => {
+    this.bot.hears('Найти нас 🔍🗺', async (ctx: Context) => {
       try {
         // Отправка локации в ответ на команду /location
         await ctx.reply('С радостью ждем вас в нашем филиале😇') // Замените координаты на нужные вам
@@ -79,7 +57,21 @@ export class StartCommand extends Command {
         ctx.reply('Произошла ошибка при отправке локации.');
       }
     });
+    this.bot.hears('Связатся с нами ☎️', (ctx) => {
+      // const contactNumber = '+998970396454'
+      ctx.replyWithContact('+998998970396454', 'Связатся с нами ☎️')
+    })
     this.bot.action("makeForAi", async (ctx) => {
+      ctx.sendMessage("Запишите куда вы хотите вы отправится?")
+      
+    })
+    // this.bot.hears('', (ctx) => {
+    //   const reqNumber = Markup.inlineKeyboard([
+    //     Markup.button.contactRequest()
+    //   ])
+    //   ctx.reply()
+    // })
+    this.bot.hears("Сделат себе тур с помощью ИИ 🤖", async (ctx) => {
       ctx.sendMessage("Запишите куда вы хотите вы отправится?")
       
     })
@@ -120,8 +112,8 @@ export class StartCommand extends Command {
               await ctx.sendMessage('Этого капитала не достаточно для путешествия 😢');
               await ctx.sendMessage('Просим вас поднять планку в бюджету для вашего будещего путиществия')
             } else {
-              
               ctx.sendMessage('Прекрасно 😁');
+            
               console.log("Good");
               // Ваши дальнейшие действия с переменными messageText и messageTextBudget
             }
