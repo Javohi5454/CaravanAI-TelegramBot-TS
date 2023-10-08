@@ -59,6 +59,7 @@ export class StartCommand extends Command {
     });
     this.bot.hears('Связатся с нами ☎️', (ctx) => {
       // const contactNumber = '+998970396454'
+      ctx.sendMessage('с нетерпением ждем вас звонок😊📞')
       ctx.replyWithContact('+998998970396454', 'Связатся с нами ☎️')
     })
     this.bot.action("makeForAi", async (ctx) => {
@@ -113,7 +114,7 @@ export class StartCommand extends Command {
               await ctx.sendMessage('Просим вас поднять планку в бюджету для вашего будещего путиществия')
             } else {
               ctx.sendMessage('Прекрасно 😁');
-            
+              
               console.log("Good");
               // Ваши дальнейшие действия с переменными messageText и messageTextBudget
             }
